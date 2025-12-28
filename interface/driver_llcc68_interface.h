@@ -37,9 +37,12 @@
 #ifndef DRIVER_LLCC68_INTERFACE_H
 #define DRIVER_LLCC68_INTERFACE_H
 
+#include "driver/gpio.h"
 #include "driver/spi_master.h"
 #include "driver_llcc68.h"
 #include "esp_err.h"
+#include "esp_log.h"
+#include "esp_log_level.h"
 
 #ifdef __cplusplus
 extern "C"
@@ -60,8 +63,7 @@ extern "C"
 	 *         - 1 spi init failed
 	 * @note   none
 	 */
-	uint8_t llcc68_interface_spi_init(spi_device_handle_t* spi_handle,
-									  spi_bus_config_t* spi_bus_cfg);
+	uint8_t llcc68_interface_spi_init(void);
 
 	/**
 	 * @brief  interface spi bus deinit
