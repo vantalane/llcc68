@@ -21,8 +21,8 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE. 
  *
- * @file      driver_llcc68_interface.h
- * @brief     driver llcc68 interface header file
+ * @file      driver_llcc68_interface_template.c
+ * @brief     driver llcc68 interface template source file
  * @version   1.0.0
  * @author    Shifeng Li
  * @date      2023-04-15
@@ -33,23 +33,8 @@
  * <tr><td>2023/04/15  <td>1.0      <td>Shifeng Li  <td>first upload
  * </table>
  */
-
-#ifndef DRIVER_LLCC68_INTERFACE_H
-#define DRIVER_LLCC68_INTERFACE_H
-
-#include "driver_llcc68.h"
-#include "driver/spi_master.h"
-
-#ifdef __cplusplus
-extern "C"{
-#endif
-
-/**
- * @defgroup llcc68_interface_driver llcc68 interface driver function
- * @brief    llcc68 interface driver modules
- * @ingroup  llcc68_driver
- * @{
- */
+ 
+#include "driver_llcc68_interface.h"
 
 /**
  * @brief  interface spi bus init
@@ -58,7 +43,10 @@ extern "C"{
  *         - 1 spi init failed
  * @note   none
  */
-uint8_t llcc68_interface_spi_init(spi_device_handle_t *spi_handle);
+uint8_t llcc68_interface_spi_init(spi_device_handle_t *spi_handle)
+{
+    return 0;
+}
 
 /**
  * @brief  interface spi bus deinit
@@ -67,7 +55,10 @@ uint8_t llcc68_interface_spi_init(spi_device_handle_t *spi_handle);
  *         - 1 spi deinit failed
  * @note   none
  */
-uint8_t llcc68_interface_spi_deinit(void);
+uint8_t llcc68_interface_spi_deinit(void)
+{
+    return 0;
+}
 
 /**
  * @brief      interface spi bus write read
@@ -81,7 +72,10 @@ uint8_t llcc68_interface_spi_deinit(void);
  * @note       none
  */
 uint8_t llcc68_interface_spi_write_read(uint8_t *in_buf, uint32_t in_len,
-                                        uint8_t *out_buf, uint32_t out_len);
+                                        uint8_t *out_buf, uint32_t out_len)
+{
+    return 0;
+}
 
 /**
  * @brief  interface reset gpio init
@@ -90,7 +84,10 @@ uint8_t llcc68_interface_spi_write_read(uint8_t *in_buf, uint32_t in_len,
  *         - 1 init failed
  * @note   none
  */
-uint8_t llcc68_interface_reset_gpio_init(void);
+uint8_t llcc68_interface_reset_gpio_init(void)
+{
+    return 0;
+}
 
 /**
  * @brief  interface reset gpio deinit
@@ -99,7 +96,10 @@ uint8_t llcc68_interface_reset_gpio_init(void);
  *         - 1 deinit failed
  * @note   none
  */
-uint8_t llcc68_interface_reset_gpio_deinit(void);
+uint8_t llcc68_interface_reset_gpio_deinit(void)
+{
+    return 0;
+}
 
 /**
  * @brief     interface reset gpio write
@@ -109,7 +109,10 @@ uint8_t llcc68_interface_reset_gpio_deinit(void);
  *            - 1 write failed
  * @note      none
  */
-uint8_t llcc68_interface_reset_gpio_write(uint8_t data);
+uint8_t llcc68_interface_reset_gpio_write(uint8_t data)
+{
+    return 0;
+}
 
 /**
  * @brief  interface busy gpio init
@@ -118,7 +121,10 @@ uint8_t llcc68_interface_reset_gpio_write(uint8_t data);
  *         - 1 init failed
  * @note   none
  */
-uint8_t llcc68_interface_busy_gpio_init(void);
+uint8_t llcc68_interface_busy_gpio_init(void)
+{
+    return 0;
+}
 
 /**
  * @brief  interface busy gpio deinit
@@ -127,7 +133,10 @@ uint8_t llcc68_interface_busy_gpio_init(void);
  *         - 1 deinit failed
  * @note   none
  */
-uint8_t llcc68_interface_busy_gpio_deinit(void);
+uint8_t llcc68_interface_busy_gpio_deinit(void)
+{
+    return 0;
+}
 
 /**
  * @brief      interface busy gpio read
@@ -137,21 +146,30 @@ uint8_t llcc68_interface_busy_gpio_deinit(void);
  *             - 1 read failed
  * @note       none
  */
-uint8_t llcc68_interface_busy_gpio_read(uint8_t *value);
+uint8_t llcc68_interface_busy_gpio_read(uint8_t *value)
+{
+    return 0;
+}
 
 /**
  * @brief     interface delay ms
  * @param[in] ms time
  * @note      none
  */
-void llcc68_interface_delay_ms(uint32_t ms);
+void llcc68_interface_delay_ms(uint32_t ms)
+{
+
+}
 
 /**
  * @brief     interface print format data
  * @param[in] fmt format data
  * @note      none
  */
-void llcc68_interface_debug_print(const char *const fmt, ...);
+void llcc68_interface_debug_print(const char *const fmt, ...)
+{
+
+}
 
 /**
  * @brief     interface receive callback
@@ -160,14 +178,75 @@ void llcc68_interface_debug_print(const char *const fmt, ...);
  * @param[in] len buffer length
  * @note      none
  */
-void llcc68_interface_receive_callback(uint16_t type, uint8_t *buf, uint16_t len);
-
-/**
- * @}
- */
-
-#ifdef __cplusplus
+void llcc68_interface_receive_callback(uint16_t type, uint8_t *buf, uint16_t len)
+{
+    switch (type)
+    {
+        case LLCC68_IRQ_TX_DONE :
+        {
+            llcc68_interface_debug_print("llcc68: irq tx done.\n");
+            
+            break;
+        }
+        case LLCC68_IRQ_RX_DONE :
+        {
+            llcc68_interface_debug_print("llcc68: irq rx done.\n");
+            
+            break;
+        }
+        case LLCC68_IRQ_PREAMBLE_DETECTED :
+        {
+            llcc68_interface_debug_print("llcc68: irq preamble detected.\n");
+            
+            break;
+        }
+        case LLCC68_IRQ_SYNC_WORD_VALID :
+        {
+            llcc68_interface_debug_print("llcc68: irq valid sync word detected.\n");
+            
+            break;
+        }
+        case LLCC68_IRQ_HEADER_VALID :
+        {
+            llcc68_interface_debug_print("llcc68: irq valid header.\n");
+            
+            break;
+        }
+        case LLCC68_IRQ_HEADER_ERR :
+        {
+            llcc68_interface_debug_print("llcc68: irq header error.\n");
+            
+            break;
+        }
+        case LLCC68_IRQ_CRC_ERR :
+        {
+            llcc68_interface_debug_print("llcc68: irq crc error.\n");
+            
+            break;
+        }
+        case LLCC68_IRQ_CAD_DONE :
+        {
+            llcc68_interface_debug_print("llcc68: irq cad done.\n");
+            
+            break;
+        }
+        case LLCC68_IRQ_CAD_DETECTED :
+        {
+            llcc68_interface_debug_print("llcc68: irq cad detected.\n");
+            
+            break;
+        }
+        case LLCC68_IRQ_TIMEOUT :
+        {
+            llcc68_interface_debug_print("llcc68: irq timeout.\n");
+            
+            break;
+        }
+        default :
+        {
+            llcc68_interface_debug_print("llcc68: unknown code.\n");
+            
+            break;
+        }
+    }
 }
-#endif
-
-#endif
