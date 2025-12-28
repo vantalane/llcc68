@@ -1,6 +1,6 @@
 /**
  * Copyright (c) 2015 - present LibDriver All rights reserved
- * 
+ *
  * The MIT License (MIT)
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
@@ -10,8 +10,8 @@
  * copies of the Software, and to permit persons to whom the Software is
  * furnished to do so, subject to the following conditions:
  *
- * The above copyright notice and this permission notice shall be included in all
- * copies or substantial portions of the Software.
+ * The above copyright notice and this permission notice shall be included in
+ * all copies or substantial portions of the Software.
  *
  * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
  * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
@@ -19,7 +19,7 @@
  * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
  * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
- * SOFTWARE. 
+ * SOFTWARE.
  *
  * @file      driver_llcc68_interface_template.c
  * @brief     driver llcc68 interface template source file
@@ -33,7 +33,7 @@
  * <tr><td>2023/04/15  <td>1.0      <td>Shifeng Li  <td>first upload
  * </table>
  */
- 
+
 #include "driver_llcc68_interface.h"
 
 /**
@@ -43,9 +43,12 @@
  *         - 1 spi init failed
  * @note   none
  */
-uint8_t llcc68_interface_spi_init(spi_device_handle_t *spi_handle)
+uint8_t llcc68_interface_spi_init(spi_device_handle_t* spi_handle,
+								  spi_bus_config_t* spi_bus_cfg)
 {
-    return 0;
+	esp_err_t retval;
+
+	return 0;
 }
 
 /**
@@ -57,7 +60,7 @@ uint8_t llcc68_interface_spi_init(spi_device_handle_t *spi_handle)
  */
 uint8_t llcc68_interface_spi_deinit(void)
 {
-    return 0;
+	return 0;
 }
 
 /**
@@ -71,10 +74,10 @@ uint8_t llcc68_interface_spi_deinit(void)
  *             - 1 write read failed
  * @note       none
  */
-uint8_t llcc68_interface_spi_write_read(uint8_t *in_buf, uint32_t in_len,
-                                        uint8_t *out_buf, uint32_t out_len)
+uint8_t llcc68_interface_spi_write_read(uint8_t* in_buf, uint32_t in_len,
+										uint8_t* out_buf, uint32_t out_len)
 {
-    return 0;
+	return 0;
 }
 
 /**
@@ -86,7 +89,7 @@ uint8_t llcc68_interface_spi_write_read(uint8_t *in_buf, uint32_t in_len,
  */
 uint8_t llcc68_interface_reset_gpio_init(void)
 {
-    return 0;
+	return 0;
 }
 
 /**
@@ -98,7 +101,7 @@ uint8_t llcc68_interface_reset_gpio_init(void)
  */
 uint8_t llcc68_interface_reset_gpio_deinit(void)
 {
-    return 0;
+	return 0;
 }
 
 /**
@@ -111,7 +114,7 @@ uint8_t llcc68_interface_reset_gpio_deinit(void)
  */
 uint8_t llcc68_interface_reset_gpio_write(uint8_t data)
 {
-    return 0;
+	return 0;
 }
 
 /**
@@ -123,7 +126,7 @@ uint8_t llcc68_interface_reset_gpio_write(uint8_t data)
  */
 uint8_t llcc68_interface_busy_gpio_init(void)
 {
-    return 0;
+	return 0;
 }
 
 /**
@@ -135,7 +138,7 @@ uint8_t llcc68_interface_busy_gpio_init(void)
  */
 uint8_t llcc68_interface_busy_gpio_deinit(void)
 {
-    return 0;
+	return 0;
 }
 
 /**
@@ -146,9 +149,9 @@ uint8_t llcc68_interface_busy_gpio_deinit(void)
  *             - 1 read failed
  * @note       none
  */
-uint8_t llcc68_interface_busy_gpio_read(uint8_t *value)
+uint8_t llcc68_interface_busy_gpio_read(uint8_t* value)
 {
-    return 0;
+	return 0;
 }
 
 /**
@@ -156,20 +159,14 @@ uint8_t llcc68_interface_busy_gpio_read(uint8_t *value)
  * @param[in] ms time
  * @note      none
  */
-void llcc68_interface_delay_ms(uint32_t ms)
-{
-
-}
+void llcc68_interface_delay_ms(uint32_t ms) {}
 
 /**
  * @brief     interface print format data
  * @param[in] fmt format data
  * @note      none
  */
-void llcc68_interface_debug_print(const char *const fmt, ...)
-{
-
-}
+void llcc68_interface_debug_print(const char* const fmt, ...) {}
 
 /**
  * @brief     interface receive callback
@@ -178,75 +175,77 @@ void llcc68_interface_debug_print(const char *const fmt, ...)
  * @param[in] len buffer length
  * @note      none
  */
-void llcc68_interface_receive_callback(uint16_t type, uint8_t *buf, uint16_t len)
+void llcc68_interface_receive_callback(uint16_t type, uint8_t* buf,
+									   uint16_t len)
 {
-    switch (type)
-    {
-        case LLCC68_IRQ_TX_DONE :
-        {
-            llcc68_interface_debug_print("llcc68: irq tx done.\n");
-            
-            break;
-        }
-        case LLCC68_IRQ_RX_DONE :
-        {
-            llcc68_interface_debug_print("llcc68: irq rx done.\n");
-            
-            break;
-        }
-        case LLCC68_IRQ_PREAMBLE_DETECTED :
-        {
-            llcc68_interface_debug_print("llcc68: irq preamble detected.\n");
-            
-            break;
-        }
-        case LLCC68_IRQ_SYNC_WORD_VALID :
-        {
-            llcc68_interface_debug_print("llcc68: irq valid sync word detected.\n");
-            
-            break;
-        }
-        case LLCC68_IRQ_HEADER_VALID :
-        {
-            llcc68_interface_debug_print("llcc68: irq valid header.\n");
-            
-            break;
-        }
-        case LLCC68_IRQ_HEADER_ERR :
-        {
-            llcc68_interface_debug_print("llcc68: irq header error.\n");
-            
-            break;
-        }
-        case LLCC68_IRQ_CRC_ERR :
-        {
-            llcc68_interface_debug_print("llcc68: irq crc error.\n");
-            
-            break;
-        }
-        case LLCC68_IRQ_CAD_DONE :
-        {
-            llcc68_interface_debug_print("llcc68: irq cad done.\n");
-            
-            break;
-        }
-        case LLCC68_IRQ_CAD_DETECTED :
-        {
-            llcc68_interface_debug_print("llcc68: irq cad detected.\n");
-            
-            break;
-        }
-        case LLCC68_IRQ_TIMEOUT :
-        {
-            llcc68_interface_debug_print("llcc68: irq timeout.\n");
-            
-            break;
-        }
-        default :
-        {
-            llcc68_interface_debug_print("llcc68: unknown code.\n");
-            
-            break;
-        }
-    }
+	switch (type)
+	{
+		case LLCC68_IRQ_TX_DONE:
+		{
+			llcc68_interface_debug_print("llcc68: irq tx done.\n");
+
+			break;
+		}
+		case LLCC68_IRQ_RX_DONE:
+		{
+			llcc68_interface_debug_print("llcc68: irq rx done.\n");
+
+			break;
+		}
+		case LLCC68_IRQ_PREAMBLE_DETECTED:
+		{
+			llcc68_interface_debug_print("llcc68: irq preamble detected.\n");
+
+			break;
+		}
+		case LLCC68_IRQ_SYNC_WORD_VALID:
+		{
+			llcc68_interface_debug_print(
+				"llcc68: irq valid sync word detected.\n");
+
+			break;
+		}
+		case LLCC68_IRQ_HEADER_VALID:
+		{
+			llcc68_interface_debug_print("llcc68: irq valid header.\n");
+
+			break;
+		}
+		case LLCC68_IRQ_HEADER_ERR:
+		{
+			llcc68_interface_debug_print("llcc68: irq header error.\n");
+
+			break;
+		}
+		case LLCC68_IRQ_CRC_ERR:
+		{
+			llcc68_interface_debug_print("llcc68: irq crc error.\n");
+
+			break;
+		}
+		case LLCC68_IRQ_CAD_DONE:
+		{
+			llcc68_interface_debug_print("llcc68: irq cad done.\n");
+
+			break;
+		}
+		case LLCC68_IRQ_CAD_DETECTED:
+		{
+			llcc68_interface_debug_print("llcc68: irq cad detected.\n");
+
+			break;
+		}
+		case LLCC68_IRQ_TIMEOUT:
+		{
+			llcc68_interface_debug_print("llcc68: irq timeout.\n");
+
+			break;
+		}
+		default:
+		{
+			llcc68_interface_debug_print("llcc68: unknown code.\n");
+
+			break;
+		}
+	}
 }
