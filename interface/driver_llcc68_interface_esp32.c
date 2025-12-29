@@ -135,7 +135,7 @@ uint8_t llcc68_interface_spi_deinit(void)
 uint8_t llcc68_interface_spi_write_read(uint8_t* in_buf, uint32_t in_len,
 										uint8_t* out_buf, uint32_t out_len)
 {
-	spi_transaction_t t;
+	spi_transaction_t t = {0};
 
 	if (spi_lora_dev_handle == NULL)
 	{
@@ -154,6 +154,7 @@ uint8_t llcc68_interface_spi_write_read(uint8_t* in_buf, uint32_t in_len,
 	t.length = bytes * 8;
 	t.tx_buffer = (in_len > 0) ? in_buf : NULL;
 	t.rx_buffer = (out_len > 0) ? out_buf : NULL;
+	t.flags = 0;
 
 	esp_err_t ret = spi_device_transmit(spi_lora_dev_handle, &t);
 	if (ret != ESP_OK)
@@ -300,7 +301,7 @@ void llcc68_interface_debug_print(const char* const fmt, ...)
 	vsnprintf(buf, sizeof(buf), fmt, args);
 	va_end(args);
 
-	ESP_LOGD("llcc68", "%s", buf);
+	ESP_LOGW("llcc68", "%s", buf);
 }
 
 /**
