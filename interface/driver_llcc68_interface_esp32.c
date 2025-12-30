@@ -176,7 +176,7 @@ uint8_t llcc68_interface_reset_gpio_init(void)
 {
 	esp_err_t ret = gpio_reset_pin(GPIO_NUM_8);
 	ret |= gpio_set_direction(GPIO_NUM_8, GPIO_MODE_OUTPUT);
-	ret |= gpio_set_level(GPIO_NUM_8, 0);
+	// ret |= gpio_set_level(GPIO_NUM_8, 0);
 
 	if (ret != ESP_OK)
 	{
@@ -215,10 +215,12 @@ uint8_t llcc68_interface_reset_gpio_deinit(void)
  */
 uint8_t llcc68_interface_reset_gpio_write(uint8_t data)
 {
-	esp_err_t ret = gpio_set_level(GPIO_NUM_8, data);
+	uint32_t gpio_val = data ? 0 : 1;
+	esp_err_t ret = gpio_set_level(GPIO_NUM_8, gpio_val);
+
 	if (ret != ESP_OK)
 	{
-		ESP_LOGE("llcc68_spi_gpio_rst", "Reset gpio init failed!");
+		ESP_LOGE("llcc68_spi_gpio_rst", "Reset gpio write failed!");
 		return 1;
 	}
 	return 0;
@@ -257,7 +259,7 @@ uint8_t llcc68_interface_busy_gpio_deinit(void)
 
 	if (ret != ESP_OK)
 	{
-		ESP_LOGE("llcc68_spi_gpio_bsy", "Busy gpio init failed!");
+		ESP_LOGE("llcc68_spi_gpio_bsy", "Busy gpio deinit failed!");
 		return 1;
 	}
 	return 0;
@@ -273,7 +275,8 @@ uint8_t llcc68_interface_busy_gpio_deinit(void)
  */
 uint8_t llcc68_interface_busy_gpio_read(uint8_t* value)
 {
-	*value = (uint8_t)gpio_get_level(GPIO_NUM_36);
+	int readval = gpio_get_level(GPIO_NUM_36);
+	*value = (uint8_t)readval;
 	return 0;
 }
 
