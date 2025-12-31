@@ -301,7 +301,10 @@ uint8_t llcc68_interface_busy_gpio_read(uint8_t* value)
  */
 void llcc68_interface_delay_ms(uint32_t ms)
 {
-	vTaskDelay(pdMS_TO_TICKS(ms));
+	// vTaskDelay(pdMS_TO_TICKS(ms));
+	TickType_t ticks = pdMS_TO_TICKS(ms);
+	if (ticks == 0) ticks = 1;
+	vTaskDelay(ticks);
 }
 
 /**
