@@ -136,6 +136,8 @@ uint8_t llcc68_interface_spi_write_read(uint8_t* in_buf, uint32_t in_len,
 										uint8_t* out_buf, uint32_t out_len)
 {
 	spi_transaction_t t = {0};
+	uint8_t tx[256];
+	uint8_t rx[256];
 
 	if (spi_lora_dev_handle == NULL)
 	{
@@ -143,18 +145,24 @@ uint8_t llcc68_interface_spi_write_read(uint8_t* in_buf, uint32_t in_len,
 		return 1;
 	}
 
-	if ((in_len == 0) && (out_len == 0))
+	uint32_t total = in_len + out_len;
+	if (total == 0)
 	{
-		// Nothing to do
 		return 0;
 	}
 
-	// use highest length of rx/tx
-	uint32_t bytes = (in_len > out_len) ? in_len : out_len;
-	t.length = bytes * 8;
-	t.tx_buffer = (in_len > 0) ? in_buf : NULL;
-	t.rx_buffer = (out_len > 0) ? out_buf : NULL;
-	t.flags = 0;
+	for (uint32_t i = 0; i < in_len; ++i)
+	{
+		tx[i] = in_buf[i];
+	}
+	for (uint32_t i = 0; i < out_len; ++i)
+	{
+		tx[in_len + i] = 0x00;	// dummy
+	}
+
+	t.length = total * 8;
+	t.tx_buffer = tx;
+	t.rx_buffer = rx;
 
 	esp_err_t ret = spi_device_transmit(spi_lora_dev_handle, &t);
 	if (ret != ESP_OK)
@@ -162,6 +170,12 @@ uint8_t llcc68_interface_spi_write_read(uint8_t* in_buf, uint32_t in_len,
 		ESP_LOGE("llcc68_spi_wr_rd", "spi_device_transmit failed: %d", ret);
 		return 1;
 	}
+
+	if (out_buf && out_len > 0)
+	{
+		memcpy(out_buf, rx + in_len, out_len);
+	}
+
 	return 0;
 }
 
